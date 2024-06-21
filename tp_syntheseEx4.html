@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Password</title>
+    <style>
+        .weak {
+            color: red;
+        }
+        .medium {
+            color: orange;
+        }
+        .strong {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Update Password</h1>
+    <form id="passwordForm">
+        <label for="username">Nom d'utilisateur:</label>
+        <input type="text" id="username" required><br>
+        <label for="currentPassword">Mot de passe courant:</label>
+        <input type="text" id="currentPassword" required><br>
+        <label for="newPassword1">Nouveau mot de passe:</label>
+        <input type="text" id="newPassword1" required><br>
+        <label for="newPassword2">Confirmer le nouveau mot de passe:</label>
+        <input type="text" id="newPassword2" required><br>
+        <button type="button" onclick="verifyPassword()">Vérifier</button>
+    </form>
+    <div id="passwordStrength"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function verifyPassword() {
+            const password = document.getElementById('newPassword1').value;
+            const strengthDiv = $('#passwordStrength');
+
+            if (password.length < 5 && !/[A-Z]/.test(password)) {
+                strengthDiv.text('Faible').addClass('weak').removeClass('medium strong');
+            } else if (password.length >= 5 && password.length < 8 && /[A-Z]/.test(password)) {
+                strengthDiv.text('Moyen').addClass('medium').removeClass('weak strong');
+            } else if (password.length >= 8 && password.length <= 10 && /[A-Z]/.test(password) && /\d/.test(password)) {
+                strengthDiv.text('Fort').addClass('strong').removeClass('weak medium');
+            } else {
+                strengthDiv.text('Invalid').removeClass('weak medium strong');
+            }
+        }
+    </script>
+</body>
+</html>
